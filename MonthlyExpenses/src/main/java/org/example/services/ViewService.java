@@ -27,6 +27,7 @@ public class ViewService {
 
     //Transactions Array of expenses Objects
     public void viewTransactions(List<ExpensesObject> transactions) {
+        System.out.println("=========================");
         System.out.println("TRANSACTIONS");
         System.out.println("[EXPENSES]");
         for (ExpensesObject transaction : transactions) {

@@ -11,16 +11,18 @@ public class MainService  {
     private Double balance;
     private Double incomeValue;
     private Double expenses;
+    private ExpensesObject transaction;
     private List<Double> incomeList;
     private List<ExpensesObject> transactions;
 
-    public MainService(Double income, Double balance, Double incomeValue, Double expense, List<ExpensesObject> transactions, List<Double> incomeList) {
+    public MainService(Double income, Double balance, Double incomeValue, Double expense, List<ExpensesObject> transactions, List<Double> incomeList, ExpensesObject transaction) {
         this.income = income;
         this.balance = balance;
         this.incomeValue = incomeValue;
         this.expenses = expense;
         this.transactions = transactions;
         this.incomeList = incomeList;
+        this.transaction = transaction;
     }
 
     public MainService() {}
@@ -37,6 +39,7 @@ public class MainService  {
         balance = 0.00;
         incomeValue = 0.00;
         expenses = 0.00;
+        transaction = new ExpensesObject();
         incomeList = new ArrayList<>();
         transactions = new ArrayList<>();
 
@@ -66,7 +69,6 @@ public class MainService  {
                 case 2:
                     //ADD EXPENSES
                     List<ExpensesObject> expensesObjects = new ArrayList<>();
-                    ExpensesObject expensesObject = null;
                     boolean endLoop = false;
                     while (!endLoop) {
 
@@ -76,12 +78,7 @@ public class MainService  {
                         viewService.viewAddExpensesAmount();
                         Double amount = consoleInput.nextDouble();
 
-                        ExpensesObject expensesObjectItem = new ExpensesObject();
-
-                        expensesObjectItem.setDescription(description);
-                        expensesObjectItem.setAmount(amount);
-
-                        expensesObject = expensesObjectItem;
+                        ExpensesObject expensesObject = new ExpensesObject(description, amount);
 
                         System.out.println("end with 'end' or '.' to continue");
                         String endLoopInput = consoleInput.next();
@@ -92,20 +89,20 @@ public class MainService  {
 
                         expensesObjects.add(expensesObject);
                         expensesList.add(amount);
+
                     }
                     this.expenses = expensesList.stream().mapToDouble(Double::doubleValue).sum();
-
-                    if (expensesObjects != null) {
-                        this.transactions.addAll(expensesObjects);
-                    }
+                    this.transactions.addAll(expensesObjects);
 
                     viewService.viewTransactions(expensesObjects);
                     break;
+
                 case 3:
-                    if (this.transactions != null) {
-                        viewService.viewTransactions(this.transactions);
-                    } else {
+                    if (this.transactions.isEmpty()) {
                         System.out.println("THERE ARE NO TRANSACTIONS");
+
+                    } else {
+                        viewService.viewTransactions(transactions);
                     }
 
                 default:
