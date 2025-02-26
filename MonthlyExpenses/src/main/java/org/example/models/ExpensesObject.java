@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.models;
 
 public class ExpensesObject {
     private String description;

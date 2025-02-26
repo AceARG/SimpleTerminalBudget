@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.model.ExpensesObject;
+import org.example.models.ExpensesObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,18 @@ public class MainService  {
     private Double balance;
     private Double incomeValue;
     private Double expenses;
+    private ExpensesObject transaction;
+    private List<Double> incomeList;
     private List<ExpensesObject> transactions;
 
-    public MainService(Double income, Double balance, Double incomeValue, Double expense, List<ExpensesObject> transactions) {
+    public MainService(Double income, Double balance, Double incomeValue, Double expense, List<ExpensesObject> transactions, List<Double> incomeList, ExpensesObject transaction) {
         this.income = income;
         this.balance = balance;
         this.incomeValue = incomeValue;
         this.expenses = expense;
         this.transactions = transactions;
+        this.incomeList = incomeList;
+        this.transaction = transaction;
     }
 
     public MainService() {}
@@ -31,18 +35,13 @@ public class MainService  {
 
         //Local Global Variables
         boolean render = true;
-        if (income == null) {
-            income = 0.00;
-        }
-        if (balance == null) {
-            balance = 0.00;
-        }
-        if (incomeValue == null) {
-            incomeValue = 0.00;
-        }
-        if (expenses == null) {
-            expenses = 0.00;
-        }
+        income = 0.00;
+        balance = 0.00;
+        incomeValue = 0.00;
+        expenses = 0.00;
+        transaction = new ExpensesObject();
+        incomeList = new ArrayList<>();
+        transactions = new ArrayList<>();
 
         while (render) {
             this.balance = incomeValue - expenses;
@@ -54,14 +53,21 @@ public class MainService  {
                 case 1:
                     //ADD INCOME
                     viewService.viewAddIncome();
-                    this.income = consoleInput.nextDouble();
-                    this.incomeValue = income;
+                    income = consoleInput.nextDouble();
+
+                    this.incomeList.add(income);
+
+                    if (this.incomeList != null) {
+                        this.incomeValue = this.incomeList.stream().mapToDouble(Double::doubleValue).sum();
+                        this.income = this.incomeValue;
+                    } else {
+                        incomeValue = income;
+                    }
                     break;
 
                 case 2:
                     //ADD EXPENSES
                     List<ExpensesObject> expensesObjects = new ArrayList<>();
-                    ExpensesObject expensesObject = new ExpensesObject();
                     boolean endLoop = false;
                     while (!endLoop) {
 
@@ -71,8 +77,7 @@ public class MainService  {
                         viewService.viewAddExpensesAmount();
                         Double amount = consoleInput.nextDouble();
 
-                        expensesObject.setDescription(description);
-                        expensesObject.setAmount(amount);
+                        ExpensesObject expensesObject = new ExpensesObject(description, amount);
 
                         System.out.println("end with 'end' or '.' to continue");
                         String endLoopInput = consoleInput.next();
@@ -83,20 +88,20 @@ public class MainService  {
 
                         expensesObjects.add(expensesObject);
                         expensesList.add(amount);
+
                     }
                     this.expenses = expensesList.stream().mapToDouble(Double::doubleValue).sum();
-                    if (this.transactions == null) {
-                        this.transactions = expensesObjects;
-                    } else {
-                        this.transactions.add(expensesObject);
-                    }
+                    this.transactions.addAll(expensesObjects);
+
                     viewService.viewTransactions(expensesObjects);
                     break;
+
                 case 3:
-                    if (this.transactions != null) {
-                        viewService.viewTransactions(this.transactions);
-                    } else {
+                    if (this.transactions.isEmpty()) {
                         System.out.println("THERE ARE NO TRANSACTIONS");
+
+                    } else {
+                        viewService.viewTransactions(transactions);
                     }
 
                 default:

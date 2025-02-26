@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.model.ExpensesObject;
+import org.example.models.ExpensesObject;
 
 import java.util.List;
 
@@ -27,6 +27,7 @@ public class ViewService {
 
     //Transactions Array of expenses Objects
     public void viewTransactions(List<ExpensesObject> transactions) {
+        System.out.println("=========================");
         System.out.println("TRANSACTIONS");
         System.out.println("[EXPENSES]");
         for (ExpensesObject transaction : transactions) {
