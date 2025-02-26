@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.model.ExpensesObject;
+import org.example.models.ExpensesObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,6 @@ public class MainService  {
             switch (option) {
                 case 1:
                     //ADD INCOME
-
                     viewService.viewAddIncome();
                     income = consoleInput.nextDouble();
 

@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.model.ExpensesObject;
+import org.example.models.ExpensesObject;
 
 import java.util.List;
 
