@@ -43,6 +43,9 @@ public class MainService  {
         incomeList = new ArrayList<>();
         transactions = new ArrayList<>();
 
+        //Initialize Logo
+        viewService.viewLogo();
+
         while (render) {
             this.balance = incomeValue - expenses;
             viewService.viewBank(balance, income, expenses);//Calculate Balance
