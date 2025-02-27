@@ -45,7 +45,7 @@ public class MainService  {
 
         while (render) {
             this.balance = incomeValue - expenses;
-            viewService.viewBank(balance, income);//Calculate Balance
+            viewService.viewBank(balance, income, expenses);//Calculate Balance
             viewService.viewOptions();
             int option = consoleInput.nextInt();
 

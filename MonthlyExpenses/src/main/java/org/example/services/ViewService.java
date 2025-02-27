@@ -7,9 +7,10 @@ import java.util.List;
 //Library Of Methods to Display Templates Return Type -> String
 public class ViewService {
     //Bank
-    public void viewBank(Double balance, Double income) {
+    public void viewBank(Double balance, Double income, Double expenses) {
         System.out.println("=========================");
         System.out.println("BANK : R" + balance);
+        System.out.println("EXPENSES : R" + expenses);
         System.out.println("INCOME : R" + income);
         System.out.println("-------------------------");
     }
