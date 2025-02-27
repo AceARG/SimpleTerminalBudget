@@ -11,41 +11,35 @@ public class MainService  {
     private Double balance;
     private Double incomeValue;
     private Double expenses;
-    private ExpensesObject transaction;
-    private List<Double> incomeList;
-    private List<ExpensesObject> transactions;
+    private final List<Double> incomeList;
+    private final List<ExpensesObject> transactions;
 
-    public MainService(Double income, Double balance, Double incomeValue, Double expense, List<ExpensesObject> transactions, List<Double> incomeList, ExpensesObject transaction) {
-        this.income = income;
-        this.balance = balance;
-        this.incomeValue = incomeValue;
-        this.expenses = expense;
-        this.transactions = transactions;
-        this.incomeList = incomeList;
-        this.transaction = transaction;
-    }
-
-    public MainService() {}
-
-    public void renderGUI() {
-        //Initialize Object Instances
-        Scanner consoleInput = new Scanner(System.in);
-        ViewService viewService = new ViewService();
-        List<Double> expensesList = new ArrayList<>();
-
-        //Local Global Variables
-        boolean render = true;
+    public MainService() {
         income = 0.00;
         balance = 0.00;
         incomeValue = 0.00;
         expenses = 0.00;
-        transaction = new ExpensesObject();
         incomeList = new ArrayList<>();
         transactions = new ArrayList<>();
+    }
+
+    //render gui
+    public void renderGUI() {
+        //INITIALIZE OBJECTS
+        Scanner consoleInput = new Scanner(System.in);
+        ViewService viewService = new ViewService();
+        List<Double> expensesList = new ArrayList<>();
+
+        //IS RENDERING
+        boolean render = true;
+
+        //LOGO DISPLAY
+        viewService.viewLogo();
 
         while (render) {
             this.balance = incomeValue - expenses;
-            viewService.viewBank(balance, income, expenses);//Calculate Balance
+            viewService.viewBank(balance, income, expenses);//CALCULATE BALANCE
+
             viewService.viewOptions();
             int option = consoleInput.nextInt();
 
@@ -57,12 +51,8 @@ public class MainService  {
 
                     this.incomeList.add(income);
 
-                    if (this.incomeList != null) {
-                        this.incomeValue = this.incomeList.stream().mapToDouble(Double::doubleValue).sum();
-                        this.income = this.incomeValue;
-                    } else {
-                        incomeValue = income;
-                    }
+                    this.incomeValue = this.incomeList.stream().mapToDouble(Double::doubleValue).sum();
+                    this.income = this.incomeValue;
                     break;
 
                 case 2:
@@ -97,6 +87,7 @@ public class MainService  {
                     break;
 
                 case 3:
+                    //VIEW TRANSACTIONS
                     if (this.transactions.isEmpty()) {
                         System.out.println("THERE ARE NO TRANSACTIONS");
 
@@ -108,6 +99,7 @@ public class MainService  {
 
             }
 
+            //EXIT
             if (option == 0) {
                 render = false;
             }

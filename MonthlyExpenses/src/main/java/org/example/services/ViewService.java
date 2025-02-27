@@ -2,11 +2,35 @@ package org.example.services;
 
 import org.example.models.ExpensesObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
-//Library Of Methods to Display Templates Return Type -> String
+//Library Of Methods To Display Templates
 public class ViewService {
-    //Bank
+    //logo
+    public void viewLogo() {
+        String fileName = "logo.txt";
+
+        //LOAD | ACCESS RESOURCES
+        ClassLoader classLoader = ViewService.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+        try {
+            assert inputStream != null;
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+        }
+    }
+    //bank
     public void viewBank(Double balance, Double income, Double expenses) {
         System.out.println("=========================");
         System.out.println("BANK : R" + balance);
@@ -15,9 +39,7 @@ public class ViewService {
         System.out.println("-------------------------");
     }
 
-    //Options
-    //ADD INCOME
-    //ADD EXPENSES
+    //options
     public void viewOptions() {
         System.out.println("1. ADD INCOME");
         System.out.println("2. ADD EXPENSES");
@@ -26,7 +48,7 @@ public class ViewService {
         System.out.println("-------------------------");
     }
 
-    //Transactions Array of expenses Objects
+    //transactions
     public void viewTransactions(List<ExpensesObject> transactions) {
         System.out.println("=========================");
         System.out.println("TRANSACTIONS");
@@ -39,7 +61,7 @@ public class ViewService {
         System.out.println("-------------------------");
     }
 
-    //Add Expenses
+    //add expenses description
     public void viewAddExpensesDescription() {
         System.out.println("ADD EXPENSES");
         System.out.println("-------------------------");
@@ -47,10 +69,12 @@ public class ViewService {
 
     }
 
+    //add expenses amount
     public void viewAddExpensesAmount() {
         System.out.println("Amount:");
     }
 
+    //add income
     public void viewAddIncome(){
         System.out.println("INCOME");
         System.out.println("-------------------------");
