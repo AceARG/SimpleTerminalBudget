@@ -23,21 +23,23 @@ public class MainService  {
         transactions = new ArrayList<>();
     }
 
+    //render gui
     public void renderGUI() {
-        //Initialize Object Instances
+        //INITIALIZE OBJECTS
         Scanner consoleInput = new Scanner(System.in);
         ViewService viewService = new ViewService();
         List<Double> expensesList = new ArrayList<>();
 
-        //Local Global Variables
+        //IS RENDERING
         boolean render = true;
 
-        //Initialize Logo
+        //LOGO DISPLAY
         viewService.viewLogo();
 
         while (render) {
             this.balance = incomeValue - expenses;
-            viewService.viewBank(balance, income, expenses);//Calculate Balance
+            viewService.viewBank(balance, income, expenses);//CALCULATE BALANCE
+
             viewService.viewOptions();
             int option = consoleInput.nextInt();
 
@@ -85,6 +87,7 @@ public class MainService  {
                     break;
 
                 case 3:
+                    //VIEW TRANSACTIONS
                     if (this.transactions.isEmpty()) {
                         System.out.println("THERE ARE NO TRANSACTIONS");
 
@@ -96,6 +99,7 @@ public class MainService  {
 
             }
 
+            //EXIT
             if (option == 0) {
                 render = false;
             }
